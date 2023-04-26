@@ -12,3 +12,4 @@
 - Multi-mode DBMS - Document DB, Key-Value DB, RDBMS support
 - In-built support to query on multiple JPDB databases
 
+![Screenshot of the JsonPowerDB Dashboard](https://github.com/sukhleen-kaur-27/Shipment-form-JPDB/blob/main/my%20JPDB%20screenshot.JPG)
