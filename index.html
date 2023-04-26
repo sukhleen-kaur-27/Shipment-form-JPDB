@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script type = "text/javascript" src ="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+        <script type="text/javascript" src = "js\index.js"></script>
+
+<!--        <script>
+var token = "90932746|-31949278232815095|90948377";
+var dbName = "LOGISTICS-DB";
+var relName = "SHIPMENT-TABLE";
+var jpdbIRL = "/api/irl";
+var jpdbIML = "/api/iml";
+var baseURL = "http://api.login2explore.com:5577";
+
+
+function resetData() {
+    $('#shipNo').val('');
+    $('#description').val('');
+    $('#source').val('');
+    $('#destination').val('');
+    $('#shipDate').val('');
+    $('#shipExp').val('');
+    $('#shipNo').prop('disabled', false);
+    $('#save').prop('disabled', true);
+    $('#change').prop('disabled', true);
+    $('#reset').prop('disabled', true);
+    $('#shipNo').focus();
+}
+
+
+function validateData() {
+    var ship_no, description, source, destination, shipping_date, expected_date;
+    ship_no = $('#shipNo').val();
+    description = $('#description').val();
+    source = $('#source').val();
+    destination = $('#destination').val();
+    shipping_date = $('#shipDate').val();
+    expected_date = $('#shipExp').val();
+    if (ship_no === '') {
+        $('#shipNo').focus();
+        return "";
+    }
+    if (description === '') {
+        $('#description').focus();
+        return "";
+    }
+    if (source === '') {
+        $('#source').focus();
+        return "";
+    }
+    if (destination === '') {
+        $('#destination').focus();
+        return "";
+    }
+    if (shipping_date === '') {
+        $('#shipDate').focus();
+        return "";
+    }
+    if (expected_date === '') {
+        $('#shipExp').focus();
+        return "";
+    }
+
+    var jsonStrObj = {
+        ship_id: ship_no,
+        description: description,
+        source: source,
+        destination: destination,
+        shipping_date: shipping_date,
+        expected_date: expected_date
+    }
+    return JSON.stringify(jsonStrObj);
+}
+
+function saveData() {
+    var jsonStrObj = validateData();
+    if (jsonStrObj === "") return "";
+    var PUTrequest = createPUTRequest(token, jsonStrObj, dbName, relName);
+    jQuery.ajaxSetup({
+        async: false
+    });
+    var resJsonObj = executeCommandAtGivenBaseUrl(PUTrequest, baseURL, jpdbIML);
+    jQuery.ajaxSetup({
+        async: true
+    });
+    console.log(resJsonObj);
+    resetData();
+    $('#shipNo').focus();
+    alert("Shipment Details Saved!");
+}
+
+
+function changeData() {
+    $('#change').prop('disabled', true);
+    jsonChange = validateData();
+    var updateRequest = createUPDATERecordRequest(token, jsonChange, dbName, relName, localStorage.getItem('shiprecno'));
+    jQuery.ajaxSetup({
+        async: false
+    });
+    var resJsonObj = executeCommandAtGivenBaseUrl(updateRequest, baseURL, jpdbIML);
+    jQuery.ajaxSetup({
+        async: true
+    });
+    console.log(resJsonObj);
+    resetData();
+    $('#shipNo').focus();
+}
+
+function getShipNo() {
+    var shipNoJsonObj = getShipNoAsJsonObj();
+    var getRequest = createGET_BY_KEYRequest(token, dbName, relName, shipNoJsonObj);
+    jQuery.ajaxSetup({
+        async: false
+    });
+    var resJsonObj = executeCommandAtGivenBaseUrl(getRequest, baseURL, jpdbIRL);
+    jQuery.ajaxSetup({
+        async: true
+    });
+    if (resJsonObj.status === 400) {
+        $('#save').prop('disabled', false);
+        $('#reset').prop('disabled', false);
+        $('#description').focus();
+    } else if (resJsonObj.status === 200) {
+        $('#shipNo').prop('disabled', true);
+        fillData(resJsonObj);
+        $('#change').prop('disabled', false);
+        $('#reset').prop('disabled', false);
+        $('#description').focus();
+    }
+}
+
+
+
+function fillData(jsonObj) {
+    saveRecNo2LS(jsonObj);
+    var record = JSON.parse(jsonObj.data).record;
+    $('#description').val(record.description);
+    $('#source').val(record.source);
+    $('#destination').val(record.destination);
+    $('#shipDate').val(record.shipping_date);
+    $('#shipExp').val(record.expected_date);
+}
+
+
+
+
+function saveRecNo2LS(jsonObj) {
+    var lvData = JSON.parse(jsonObj.data);
+    localStorage.setItem('shiprecno', lvData.rec_no);
+}
+
+function getShipNoAsJsonObj() {
+    var shipno = $('#shipNo').val();
+    var jsonId = {
+        ship_id: shipno
+    };
+    return JSON.stringify(jsonId);
+}
+</script>-->
+    </head>
+    <body>
+        <div class="container">
+            <div>
+                <h2>Shipment Form using JPDB</h2>
+            </div>
+            <form id="shipForm" method="get">
+                <div class="form-group">
+                    <label >Shipment Number:</label> 
+                    <input type="text" class="form-control" id="shipNo" onChange="getShipNo()"
+                           placeholder="Enter Shipment Number" required>
+                </div>
+                <div class="form-group">
+                    <label >Description:</label>
+                    <textarea class="form-control" id="description"
+                              placeholder="Enter Description" rows = "3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Source:</label>
+                    <input type="text" class="form-control" id="source"
+                           placeholder="Enter Source" required>
+                </div>
+                <div class="form-group">
+                    <label>Destination:</label>
+                    <input type="text" class="form-control" id="destination"
+                           placeholder="Enter Destination" required>
+                </div>
+                <div class="form-group">
+                    <label>Shipping-Date:</label>
+                    <input type="date" class="form-control" id="shipDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Expected-Delivery-Date:</label>
+                    <input type="date" class="form-control" id="shipExp" required>
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-lg btn-primary" id="save" onclick="saveData();" disabled>Save</button>
+                    <button type="submit" class="btn btn-lg btn-primary" id="change" onclick="changeData();" disabled>Update</button>
+                    <button type="submit" class="btn btn-lg btn-primary" id="reset" onclick="resetData();" disabled>Reset</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
