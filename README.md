@@ -15,3 +15,6 @@
 ## Screenshot of the JsonPowerDB Dashboard
 
 ![Screenshot of the JsonPowerDB Dashboard](https://github.com/sukhleen-kaur-27/Shipment-form-JPDB/blob/main/my%20JPDB%20screenshot.JPG)
+
+## Using the JsonPowerDB
+![Screenshot of adding record to the JsonPowerDb](https://github.com/sukhleen-kaur-27/Shipment-form-JPDB/blob/main/Use%20of%20JsonPowerDB.JPG)
